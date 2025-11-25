@@ -38,3 +38,8 @@ Notificaciones: Al guardar una mascota con fechas de vacunas futuras, el MenuVie
 Receptor de Alarma: Un NotificationReceiver escucha esta alarma y, cuando se dispara (un día antes de la fecha), crea y muestra la notificación de recordatorio al usuario.
 
 Persistencia: Toda la información de las mascotas y sus vacunas se guarda localmente en una base de datos Room.
+
+
+
+APP firmada y archivo .jks
+<img width="788" height="172" alt="image" src="https://github.com/user-attachments/assets/7f195783-726f-4080-a0fb-b30900bbfe84" />
