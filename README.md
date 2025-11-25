@@ -1,45 +1,74 @@
 # Patas y Colas 🐾
-Patas y Colas es una aplicación móvil Android diseñada para ayudarte a gestionar la información y la salud de tus mascotas. La aplicación permite llevar un registro detallado de cada una de tus mascotas, con un enfoque especial en el seguimiento de su calendario de vacunación a través de recordatorios y notificaciones.
 
-Integrantes:
-Samuel Mansilla
-Francisco Mardones
+Patas y Colas es una solución integral compuesta por una aplicación móvil Android nativa y un backend en Spring Boot, diseñada para gestionar la salud y el historial de vacunación de mascotas de manera eficiente.
 
-trello:https://trello.com/b/4tdx7vMf/movil
+## 1. Integrantes del Proyecto
+* **Samuel Mansilla**
+* **Francisco Mardones**
 
-🚀 ¿Qué hace la aplicación?
-La aplicación permite a los usuarios:
 
-Gestionar Múltiples Mascotas: Puedes añadir, editar o eliminar los perfiles de todas tus mascotas.
+## 2. Funcionalidades Principales
 
-Crear Perfiles Detallados: Cada perfil de mascota incluye información esencial como nombre, especie (perro, gato u otro), raza, edad, peso y una foto de perfil.
-
-Subir Fotos: Puedes seleccionar una foto desde la galería de tu dispositivo o tomar una nueva foto con la cámara.
-
-Registro de Vacunas: La función más importante es el registro de vacunas. Puedes añadir múltiples vacunas para cada mascota, especificando el nombre de la vacuna y la fecha de aplicación o próxima dosis.
-
-Recordatorios Automáticos: La aplicación programa automáticamente notificaciones locales. El sistema enviará un recordatorio un día antes de la fecha programada para cada vacuna, asegurando que no olvides las citas importantes.
-
-🛠️ ¿Cómo funciona?
-El flujo principal de la aplicación es el siguiente:
-
-Pantalla de Bienvenida: Al iniciar la app, el usuario ve una pantalla de bienvenida (PortadaScreen).
-
-Pantalla Principal (Menú): Al continuar, el usuario llega al MenuScreen. Esta pantalla tiene dos estados principales:
-
-Vista de Recordatorios: Por defecto (en móviles), muestra un resumen de los próximos recordatorios de vacunas programadas.
-
-Gestión de Mascotas: En la cabecera, un carrusel permite seleccionar una mascota existente para ver/editar su formulario, o pulsar el botón "Agregar" para crear una nueva.
-
-Formulario de Mascota: Al agregar o seleccionar una mascota, se muestra el PetForm. Aquí es donde el usuario introduce todos los datos del animal y gestiona su lista de vacunas.
-
-Notificaciones: Al guardar una mascota con fechas de vacunas futuras, el MenuViewModel utiliza un NotificationScheduler para programar una alarma (AlarmManager).
-
-Receptor de Alarma: Un NotificationReceiver escucha esta alarma y, cuando se dispara (un día antes de la fecha), crea y muestra la notificación de recordatorio al usuario.
-
-Persistencia: Toda la información de las mascotas y sus vacunas se guarda localmente en una base de datos Room.
+### Aplicación Móvil & Backend
+* **Seguridad y Autenticación:** Registro e inicio de sesión seguro utilizando JWT (JSON Web Tokens) para proteger la comunicación entre la app y el servidor.
+* **Gestión de Perfiles de Mascotas:** Creación y almacenamiento de fichas con datos como nombre, raza, edad, peso y género.
+* **Historial Médico:** Visualización y control de las mascotas registradas por cada usuario.
+* **Persistencia en la Nube:** Base de datos Oracle gestionada a través de una API RESTful desarrollada en Spring Boot.
+* **Datos Curiosos:** Integración con API externa para mostrar datos aleatorios sobre gatos (CatFacts).
 
 
 
-APP firmada y archivo .jks
-<img width="788" height="172" alt="image" src="https://github.com/user-attachments/assets/7f195783-726f-4080-a0fb-b30900bbfe84" />
+## 3. Endpoints Utilizados
+
+### A. Microservicio Propio (Spring Boot)
+Estos son los endpoints expuestos por el backend `backend_movil`:
+
+**Base URL:** (URL de despliegue, ej: `https://tu-backend-render.com`)
+
+#### 🔐 Autenticación (`AuthController`)
+* **POST** `/auth/register`
+    * *Descripción:* Registra un nuevo usuario en la base de datos.
+    * *Body:* JSON con nombre, apellido, email, contraseña, etc.
+* **POST** `/auth/login`
+    * *Descripción:* Verifica credenciales y devuelve el token JWT de acceso.
+    * *Body:* JSON con email y password.
+
+#### 🐶 Gestión de Mascotas (`PetController`)
+* **POST** `/api/pets`
+    * *Descripción:* Crea una nueva ficha de mascota asociada al usuario autenticado.
+* **GET** `/api/pets/user/{userId}`
+    * *Descripción:* Obtiene la lista de todas las mascotas pertenecientes a un usuario específico.
+* **GET** `/api/pets/{id}`
+    * *Descripción:* Obtiene los detalles de una mascota específica por su ID.
+* **PUT** `/api/pets/{id}`
+    * *Descripción:* Actualiza la información de una mascota existente.
+* **DELETE** `/api/pets/{id}`
+    * *Descripción:* Elimina el registro de una mascota del sistema.
+
+### B. API Externa (Pública)
+Utilizada directamente por la aplicación móvil para contenido dinámico.
+* **GET** `https://catfact.ninja/fact`
+    * *Descripción:* Obtiene un dato curioso aleatorio sobre gatos.
+
+
+
+## 4. Pasos para ejecutar el proyecto
+
+### Backend (Servidor)
+1.  **Configuración de BD:** Asegúrate de tener la Wallet de Oracle configurada en `src/main/resources/wallet` y las credenciales correctas en `application.properties`.
+2.  **Compilar:** Ejecuta el comando `./mvnw clean package` en la raíz del proyecto `backend_movil`.
+3.  **Ejecutar:** Corre el archivo JAR generado o utiliza `./mvnw spring-boot:run`.
+
+### Aplicación Móvil
+1.  **Clonar:** Clona este repositorio.
+2.  **Abrir en Android Studio:** Selecciona la carpeta `patasycolasmovil`.
+3.  **Sincronizar:** Espera a que Gradle descargue las dependencias.
+4.  **Ejecutar:** Conecta tu dispositivo Android o inicia un emulador y presiona "Run" (▶️).
+
+
+
+## 5. Evidencia: APK Firmado y KeyStore
+
+A continuación se adjunta la evidencia de la generación del APK firmado (`app-release.apk`) y el archivo de claves (`keystore.jks`) utilizados para la distribución.
+
+<img width="788" height="172" alt="Evidencia APK Firmado y JKS" src="https://github.com/user-attachments/assets/7f195783-726f-4080-a0fb-b30900bbfe84" />
